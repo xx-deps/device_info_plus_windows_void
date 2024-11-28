@@ -1,6 +1,6 @@
 name: device_info_plus_windows
 description: "A new Flutter plugin project."
-version: 0.0.3
+version: 0.0.4
 homepage:
 
 environment:
@@ -41,7 +41,7 @@ flutter:
     implements: device_info_plus
     platforms:
       windows:
-        dartPluginClass: DeviceInfoPlusWindowsPlugin
+        dartPluginClass: DeviceInfoPlusWindowsPlugin2
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:
