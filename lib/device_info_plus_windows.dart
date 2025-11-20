@@ -49,33 +49,32 @@ class DeviceInfoPlusWindowsPlugin2 extends DeviceInfoPlatform {
     try {
       final currentVersionKey = Registry.openPath(RegistryHive.localMachine,
           path: r'SOFTWARE\Microsoft\Windows NT\CurrentVersion');
-      final buildLab = currentVersionKey.getValueAsString('BuildLab') ?? '';
-      final buildLabEx = currentVersionKey.getValueAsString('BuildLabEx') ?? '';
+      final buildLab = currentVersionKey.getStringValue('BuildLab') ?? '';
+      final buildLabEx = currentVersionKey.getStringValue('BuildLabEx') ?? '';
       final digitalProductIdValue =
           currentVersionKey.getValue('DigitalProductId');
-      final digitalProductId = digitalProductIdValue != null &&
-              digitalProductIdValue.data is Uint8List
-          ? digitalProductIdValue.data as Uint8List
-          : Uint8List.fromList([]);
+          final digitalProductId = digitalProductIdValue is BinaryValue
+            ? digitalProductIdValue.value
+            : Uint8List.fromList([]);
       final displayVersion =
-          currentVersionKey.getValueAsString('DisplayVersion') ?? '';
-      final editionId = currentVersionKey.getValueAsString('EditionID') ?? '';
+          currentVersionKey.getStringValue('DisplayVersion') ?? '';
+      final editionId = currentVersionKey.getStringValue('EditionID') ?? '';
       int installDateTimestamp =
-          (currentVersionKey.getValueAsInt('InstallDate') ?? 0) * 1000;
+          (currentVersionKey.getIntValue('InstallDate') ?? 0) * 1000;
       if (installDateTimestamp > 8640000000000000) {
         installDateTimestamp = 0;
       }
       final installDate =
           DateTime.fromMillisecondsSinceEpoch(installDateTimestamp);
-      final productId = currentVersionKey.getValueAsString('ProductID') ?? '';
-      var productName = currentVersionKey.getValueAsString('ProductName') ?? '';
+      final productId = currentVersionKey.getStringValue('ProductID') ?? '';
+      var productName = currentVersionKey.getStringValue('ProductName') ?? '';
       final registeredOwner =
-          currentVersionKey.getValueAsString('RegisteredOwner') ?? '';
-      final releaseId = currentVersionKey.getValueAsString('ReleaseId') ?? '';
+          currentVersionKey.getStringValue('RegisteredOwner') ?? '';
+      final releaseId = currentVersionKey.getStringValue('ReleaseId') ?? '';
 
       final sqmClientKey = Registry.openPath(RegistryHive.localMachine,
           path: r'SOFTWARE\Microsoft\SQMClient');
-      final machineId = sqmClientKey.getValueAsString('MachineId') ?? '';
+      final machineId = sqmClientKey.getStringValue('MachineId') ?? '';
 
       GetSystemInfo(systemInfo);
 
